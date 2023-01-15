@@ -2,32 +2,40 @@
 using namespace std;
 
 /**
- * Recursive Binary Search 
- * Time: O(NLogN)
+ * Recursive Binary Search
+ * Time: O(logN)
  * Space O(logN)
  * @param values reference array of values
  * @param size array size
  * @param target target to find in given values
  * @return 0-indexed position of the target in the array input. -1 if not found
  */
-int recursiveBinarySearch(int values[], int size, int target) {
-    
-    return -1;
+int recursiveBinarySearch(int values[], int low, int high, int target) {
+
+
+    if (low > high) return -1;
+
+    int mid = (low + high) >> 1;
+
+    if (values[mid] == target) return mid;
+    else if (values[mid] > target) return recursiveBinarySearch(values, low, mid - 1, target);
+    else return recursiveBinarySearch(values, mid + 1, high, target);
+
 }
 
 /**
- * Iterative Binary Search 
- * Time: O(NLogN)
+ * Iterative Binary Search
+ * Time: O(logN)
  * Space O(1)
  * @param values reference array of values
  * @param size array size
  * @param target target to find in given values
  * @return 0-indexed position of the target in the array input. -1 if not found
  */
-int iterativeBinarySearch(int values[], int size, int target) {
+int iterativeBinarySearch(int values[], int low, int high, int target) {
 
-    int left = 0;
-    int right = size;
+    int left = low;
+    int right = high;
 
     while (left <= right) {
         int mid = (left + right) >> 1;
@@ -71,12 +79,14 @@ int main() {
         cout << x << " ";
     }
 
-    cout << "Choose a target value" << endl;
+    cout << endl << "Choose a target value" << endl;
     cin >> target;
 
-    //search
-    bool targetFoundPosition = iterativeBinarySearch(values, searchSize, target);
+    //search Iterative
+   // int targetFoundPosition = iterativeBinarySearch(values, 0, searchSize, target);
 
+    //search recursive
+    int targetFoundPosition = recursiveBinarySearch(values, 0, searchSize, target);
 
     //result
     cout << (targetFoundPosition == -1 ? "Not Found" : "Found at position") << targetFoundPosition + 1;  //1-indexed
