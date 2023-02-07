@@ -19,7 +19,14 @@ vector<int> buildLPSArray(string pattern) {
         }
         else {
             //reset matched length if no match
-            lps[idx++] = matchedLength ? lps[matchedLength - 1] : 0;
+            if (matchedLength != 0) {
+                matchedLength = lps[matchedLength - 1];
+            }
+            else {
+                lps[idx] = 0;
+                idx += 1;
+            }
+
         }
     }
 
@@ -34,6 +41,10 @@ void KMPSearch(string text, string pattern) {
     if (m > n) return;
 
     vector<int> lps = buildLPSArray(pattern);
+
+    for (auto x : lps) {
+        cout << x << " ";
+    }
     int i = 0;
     int j = 0;
     while (i < n) {
@@ -57,8 +68,8 @@ void KMPSearch(string text, string pattern) {
 }
 
 int main() {
-    string text = "Uzumaki naruto, the seventh hokage of konoha village of water";
-    string pattern = "of";
+    string text = "cxdwzolfrccawvewcxdwzolfrccxdwzolfrccawvewkrcawvewkrkrysotfbdngngvfrj";
+    string pattern = "cxdwzolfrccawvewkr";
     KMPSearch(text, pattern);
     return 0;
 }
