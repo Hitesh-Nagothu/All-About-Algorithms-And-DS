@@ -6,13 +6,12 @@ using namespace std;
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        if (find(wordList.begin(), wordList.end(), endWord) == wordList.end()) {
-            return 0;
-        }
-        
+
         queue<pair<string, int>> q;
         q.push({beginWord, 1});
         unordered_set<string> wordSet(wordList.begin(), wordList.end());
+        if(!wordSet.count(endWord))return false;
+        
         wordSet.erase(beginWord);
 
         while(!q.empty()){
