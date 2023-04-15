@@ -5,8 +5,8 @@ using namespace std;
 
 class MedianFinder {
 public:
-    priority_queue<int, vector<int>, greater<int>> maxHeap;
-    priority_queue<int> minHeap;
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+    priority_queue<int> maxHeap;
 
     MedianFinder() {
         
@@ -14,23 +14,23 @@ public:
     
     void addNum(int num) {
 
-        this->maxHeap.push(num);
+         maxHeap.push(num);
 
         //balance
-        this->minHeap.push(this->maxHeap.top());
-        this->maxHeap.pop();
+         minHeap.push( maxHeap.top());
+         maxHeap.pop();
 
-        if(this->maxHeap.size()<this->minHeap.size()){
+        if( maxHeap.size()< minHeap.size()){
             //need to always keep the maxHeap size equal or greater than what minHeap has
-            this->maxHeap.push(this->minHeap.top());
-            this->minHeap.pop();
+             maxHeap.push( minHeap.top());
+             minHeap.pop();
         }
     }
     
     double findMedian() {
-        if(this->minHeap.size()==this->maxHeap.size()){
-            return (double)(this->minHeap.top()+this->maxHeap.top())/2.0;
+        if( minHeap.size()== maxHeap.size()){
+            return (double)( minHeap.top()+ maxHeap.top())/2.0;
         }
-        return this->maxHeap.top();
+        return  maxHeap.top();
     }
 };

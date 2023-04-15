@@ -12,17 +12,14 @@ public:
         
         queue<pair<string, int>> q;
         q.push({beginWord, 1});
-        unordered_set<string> seenWords;
-        unordered_set<string> wordSet;
-        seenWords.insert(beginWord);
-
-        for(const auto& word: wordList) wordSet.insert(word);
+        unordered_set<string> wordSet(wordList.begin(), wordList.end());
+        wordSet.erase(beginWord);
 
         while(!q.empty()){
             int qSize = q.size();
 
-            while(qSize>0){
-                pair<string, int> currentQueueNode = q.front();
+            while(qSize--){
+                auto currentQueueNode = q.front();
                 q.pop();
                 string currentWord = currentQueueNode.first;
                 int currentSteps = currentQueueNode.second;
@@ -34,14 +31,13 @@ public:
                     for(char k ='a'; k <='z'; k++){
                         newWord[i]=k;
 
-                        if(wordSet.find(newWord)!=wordSet.end() && seenWords.find(newWord)==seenWords.end()){
+                        if(wordSet.find(newWord)!=wordSet.end()){
                             q.push({newWord, currentSteps+1});
-                            seenWords.insert(newWord);
+                            wordSet.erase(newWord);
                         }
                     }
                 }
 
-                qSize-=1;
             }
         }
 
